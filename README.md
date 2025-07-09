@@ -1,4 +1,4 @@
-'''# Ubuntu Workspace Setup Script
+# Ubuntu Workspace Setup Script
 
 This script automates the setup of a complete development environment on a fresh Ubuntu 22.04 LTS installation. It is designed to be modular and idempotent, meaning you can run it multiple times without issues, and you can choose to run only specific parts of the installation.
 
@@ -70,4 +70,3 @@ This will display a help menu with the list of available functions.
 - The script should **not** be run as root. It will ask for sudo privileges when needed.
 - A reboot is recommended after the script finishes to ensure all changes take effect.
 - The script creates backups of your `~/.bashrc` and `~/.profile` files before modifying them.
-'''
