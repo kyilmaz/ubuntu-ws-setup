@@ -16,3 +16,6 @@ If you're ever unsure what to do, you can ask for help:
 ```
 /help
 ```
+
+## 3. Notes & Tests
+docker run -d -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
