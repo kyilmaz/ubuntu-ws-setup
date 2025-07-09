@@ -301,10 +301,6 @@ EOF
         cp ~/.profile ~/.profile.backup.$(date +%Y%m%d)
         cat <<'EOF' >>~/.profile
 
-export TMOUT=
-export LC_ALL=C
-export LANG=en_US.UTF-8
-
 # Function remotedisplay to get ip for ssh
 if [ -n "$SSH_CONNECTION" ]; then
   function remotedisplay() {
@@ -316,7 +312,12 @@ if [ -n "$SSH_CONNECTION" ]; then
     export DISPLAY
   fi
 fi
-export PS1="\033[38;5;209m\]┌──[\033[38;5;141m\]\u\033[38;5;209m\]:\033[38;5;105m\]\h\033[38;5;231m\]\W\033[38;5;209m\]]\n\033[38;5;209m\]└─\[\033[38;5;209m\]$\[\033[37m\] "
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1="\[\033[38;5;141m\]\u\[\033[0m\]@\[\033[38;5;39m\]\h\[\033[0m\]:\[\033[1;37m\]\W\[\033[0;33m\]\$(parse_git_branch)\[\033[0m\]\$ "
+
 export PATH="$HOME/.cargo/bin:$HOME/miniconda3/bin:$PATH"
 EOF
     fi
@@ -378,7 +379,7 @@ main() {
         handle_packagekit_conflict
         system_update_and_optimize
         install_essential_tools
-		install_extra_fonts
+        install_extra_fonts
         install_multimedia_tools
         install_system_tools
         install_dev_tools
