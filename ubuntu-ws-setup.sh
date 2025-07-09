@@ -107,8 +107,10 @@ EOF
         log "IPv6 disable settings already present in /etc/sysctl.conf"
     fi
 
-    sudo sed -i.bak 's/#UseDNS no/UseDNS no/g' /etc/ssh/sshd_config || log_warning "Failed to disable DNS resolve on ssh"
-
+    sudo sed -i.bkp1 's/#UseDNS no/UseDNS no/g' /etc/ssh/sshd_config || log_warning "Failed to disable DNS resolve on ssh"
+	
+    sudo sed -i.bkp2 's/#AddressFamily any/AddressFamily inet/g' /etc/ssh/sshd_config || log_warning "Failed to set ssh to inet"
+	
     log "Applying performance optimizations with tuned..."
     if ! is_installed tuned; then
         log "Installing tuned..."
