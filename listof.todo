@@ -1,0 +1,22 @@
+# ToDo
+wget -qO- https://get.casaos.io | sudo bash
+&& sadf
+%
+Use Repoman to fix sources 
+install & Configure -- NoMachine
+sudo apt install -y openssh-server
+Never Turnon Auto Updates
+Bluetooh to disable
+rustDesk settings apply
+nomachine settings apply
+
+than go to https://github.com/kyilmaz/popos-ws-setup
+
+than install CasaOS
+
+⇒ neovim from scratch https://github.com/Sin-cy/dotfiles
+
+
+? Conda
+conda install --rev 0  # this will revert your environment to its default state, removing all dependencies installed there
+conda update conda # This will install the latest conda
