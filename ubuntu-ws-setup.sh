@@ -5,7 +5,7 @@
 # 
 
 # --- Configuration ---
-NODE_VERSION="22.x"
+NODE_VERSION="18"
 NVIDIA_DRIVER="535"
 
 # --- Colors ---
@@ -198,13 +198,24 @@ install_dev_tools() {
     else
         log "Go is already installed."
     fi
-
-    if ! command -v node &>/dev/null; then
-        log "Installing Node.js v${NODE_VERSION}..."
-        curl -fsSL "https://deb.nodesource.com/setup_${NODE_VERSION}" | sudo -E bash -
-        sudo apt-get install -y nodejs
+  
+    if ! command -v nvm &>/dev/null; then
+        log "NVM is not installed. Installing NVM..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
     else
-        log "Node.js is already installed."
+        log "NVM is already installed."
+    fi
+
+    if ! nvm ls "$NODE_VERSION" | grep -q "v$NODE_VERSION"; then
+        log "Installing Node.js v$NODE_VERSION via NVM..."
+        nvm install "$NODE_VERSION"
+        nvm use "$NODE_VERSION"
+        nvm alias default "$NODE_VERSION"
+    else
+        log "Node.js v$NODE_VERSION is already installed."
     fi
 
     if ! command -v conda &>/dev/null; then
@@ -345,6 +356,8 @@ parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1="\[\033[38;5;141m\]\u\[\033[0m\]@\[\033[38;5;39m\]\h\[\033[0m\]:\[\033[1;37m\]\W\[\033[0;33m\]\$(parse_git_branch)\[\033[0m\]\$ "
+
+export NVM_DIR="$HOME/.nvm"
 
 export PATH="$HOME/.cargo/bin:$HOME/miniconda3/bin:$PATH"
 EOF
