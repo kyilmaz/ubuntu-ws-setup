@@ -158,13 +158,27 @@ install_system_tools() {
     else
         log "RustDesk is already installed."
     fi
+    
+    if lspci | grep -i nvidia >/dev/null 2>&1; then
+        log "NVIDIA GPU detected."
 
-    if ! nvidia-smi >/dev/null 2>&1; then
-        log "Installing Nvidia drivers..."
-        sudo apt-get install -y "nvidia-driver-${NVIDIA_DRIVER}" "nvidia-dkms-${NVIDIA_DRIVER}"
+        if ! command -v nvidia-smi >/dev/null 2>&1; then
+            log "Installing Nvidia drivers..."
+            sudo apt-get install -y "nvidia-driver-${NVIDIA_DRIVER}" "nvidia-dkms-${NVIDIA_DRIVER}"
+        else
+            log "Nvidia drivers appear to be installed."
+        fi
+
+        if command -v nvidia-smi >/dev/null 2>&1 && ! command -v nvcc >/dev/null 2>&1; then
+            log "Installing Nvidia CUDA Toolkit..."
+            sudo apt-get install -y nvidia-cuda-toolkit
+        elif command -v nvcc >/dev/null 2>&1; then
+            log "Nvidia CUDA Toolkit is present."
+        fi
     else
-        log "Nvidia drivers appear to be installed."
+        log "No NVIDIA GPU detected. Skipping Nvidia driver and CUDA installation."
     fi
+
 }
 
 install_dev_tools() {
@@ -225,7 +239,7 @@ install_dev_tools() {
     else
         log "Google Chrome is already installed."
     fi
-	
+    
     if ! is_installed firefox; then
         log "Installing Firefox ESR..."
         sudo add-apt-repository -y ppa:mozillateam/ppa
