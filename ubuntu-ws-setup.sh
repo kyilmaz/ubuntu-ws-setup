@@ -74,6 +74,9 @@ system_update_and_optimize() {
         log "Removing snapd..."
         sudo apt-get remove --purge snapd -y
         sudo apt-mark hold snapd
+        rm -rf ~/snap
+        sudo rm -rf /var/snap
+        sudo rm -rf /var/lib/snapd
     fi
 
     log "Configuring power management to prevent sleep..."
@@ -222,6 +225,15 @@ install_dev_tools() {
     else
         log "Google Chrome is already installed."
     fi
+	
+    if ! is_installed firefox; then
+        log "Installing Firefox ESR..."
+        sudo add-apt-repository -y ppa:mozillateam/ppa
+        sudo apt-get update
+        sudo apt install -y firefox-esr
+    else
+        log "Firefox is already installed."
+    fi	
 
     if ! is_installed docker-ce; then
         log "Installing Docker..."
