@@ -95,6 +95,11 @@ system_update_and_optimize() {
     echo "exec gnome-session" >~/.xsession
     chmod +x ~/.xsession
     gsettings set org.gnome.desktop.interface enable-animations false || log_warning "Failed to disable animations"
+    # Disabling Automounts
+    gsettings set org.gnome.desktop.media-handling automount-open false || log_warning "Failed to disable automount-open"
+    gsettings set org.gnome.desktop.media-handling automount false || log_warning "Failed to disable automount"
+    sudo systemctl disable udisks2 || log_warning "Failed to disable udisks2"
+    sudo systemctl mask udisks2
 
     if ! grep -q 'net.ipv6.conf.all.disable_ipv6 = 1' /etc/sysctl.conf; then
         sudo tee -a /etc/sysctl.conf >/dev/null <<EOF
