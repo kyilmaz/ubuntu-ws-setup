@@ -147,7 +147,7 @@ install_multimedia_tools() {
 
 install_system_tools() {
     log "Installing system tools..."
-    sudo apt-get install -y filezilla gnome-disk-utility gparted tilix flameshot ncdu ranger fzf glances iotop tmux remmina remmina-plugin-rdp p7zip-full unzip gnome-tweaks dconf-editor postgresql-client redis-tools
+    sudo apt-get install -y filezilla partclone fsarchiver xfsprogs reiserfsprogs reiser4progs jfsutils ntfsprogs btrfs-progs gnome-disk-utility gparted tilix flameshot ncdu ranger fzf glances iotop tmux remmina remmina-plugin-rdp p7zip-full unzip gnome-tweaks dconf-editor postgresql-client redis-tools
 
     if ! is_installed rustdesk; then
         log "Installing RustDesk..."
