@@ -131,7 +131,7 @@ EOF
 
 install_essential_tools() {
     log "Installing essential tools..."
-    sudo apt-get install -y curl wget gpg git build-essential dkms software-properties-common apt-transport-https ca-certificates gnupg lsb-release vim nano htop neofetch tree apt-file locate mlocate jq 
+    sudo apt-get install -y curl wget gpg git duf archivemount build-essential dkms software-properties-common apt-transport-https ca-certificates gnupg lsb-release vim nano htop neofetch tree apt-file locate mlocate jq 
 }
 
 install_extra_fonts() {
