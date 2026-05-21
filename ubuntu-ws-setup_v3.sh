@@ -190,7 +190,7 @@ install_system_tools() {
     log "Installing system tools..."
     sudo apt-get install -y \
         filezilla partclone fsarchiver \
-        xfsprogs reiserfsprogs reiser4progs jfsutils ntfsprogs btrfs-progs \
+        xfsprogs reiserfsprogs reiser4progs jfsutils btrfs-progs \
         gnome-disk-utility gparted tilix flameshot \
         ncdu ranger fzf glances iotop tmux \
         remmina remmina-plugin-rdp \
@@ -339,21 +339,6 @@ EOF
         sudo systemctl enable docker --now
     else
         log "Docker already installed."
-    fi
-
-    # Rancher Desktop
-    if ! is_installed rancher-desktop; then
-        log "Installing Rancher Desktop..."
-        curl -s https://download.opensuse.org/repositories/isv:/Rancher:/stable/deb/Release.key \
-            | gpg --yes --dearmor \
-            | sudo dd status=none of=/usr/share/keyrings/isv-rancher-stable-archive-keyring.gpg
-        echo 'deb [signed-by=/usr/share/keyrings/isv-rancher-stable-archive-keyring.gpg] \
-https://download.opensuse.org/repositories/isv:/Rancher:/stable/deb/ ./' \
-            | sudo tee /etc/apt/sources.list.d/isv-rancher-stable.list >/dev/null
-        sudo apt-get update
-        sudo apt-get install -y rancher-desktop
-    else
-        log "Rancher Desktop already installed."
     fi
 
     # Minikube
